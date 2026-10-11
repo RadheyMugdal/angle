@@ -12,7 +12,7 @@ export type AuthConfig = {
 export function createAuth(env: AuthConfig, database: Database) {
   return betterAuth({
     database: drizzleAdapter(database, {
-      provider: "sqlite",
+      provider: "pg",
       schema,
     }),
     trustedOrigins: [env.BETTER_AUTH_URL],
