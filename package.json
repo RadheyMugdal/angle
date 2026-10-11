@@ -1,6 +1,7 @@
 {
   "name": "angle-io",
   "private": true,
+  "type": "module",
   "workspaces": {
     "packages": [
       "apps/*",
@@ -19,7 +20,6 @@
       "@neondatabase/serverless": "^1.2.0",
       "@trpc/server": "^11.18.0",
       "@trpc/client": "^11.18.0",
-      "better-auth": "1.7.7",
       "@tailwindcss/postcss": "^4.3.3",
       "@types/react": "^19.2.18",
       "@types/react-dom": "^19.2.7",
@@ -27,29 +27,30 @@
       "drizzle-orm": "1.0.0-rc.4"
     }
   },
-  "type": "module",
   "scripts": {
-    "dev": "turbo run dev",
     "build": "turbo run build",
+    "check": "ultracite check",
     "check-types": "turbo run check-types",
-    "dev:web": "turbo run dev -F web --",
+    "db:generate": "turbo run db:generate -F @angle-io/db --",
+    "db:local": "turbo run db:local -F @angle-io/db --",
+    "db:migrate": "turbo run db:migrate -F @angle-io/db --",
     "db:push": "turbo run db:push -F @angle-io/db --",
     "db:studio": "turbo run db:studio -F @angle-io/db --",
-    "db:generate": "turbo run db:generate -F @angle-io/db --",
-    "db:migrate": "turbo run db:migrate -F @angle-io/db --",
-    "db:local": "turbo run db:local -F @angle-io/db --",
+    "deploy": "bunx vercel deploy",
+    "deploy:check": "bunx vercel deploy --dry",
+    "deploy:prod": "bunx vercel deploy --prod",
     "deploy:setup": "bunx vercel link",
+    "dev": "turbo run dev",
     "dev:vercel": "bunx vercel dev -L",
+    "dev:web": "turbo run dev -F web --",
+    "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/",
     "env:preview": "tsx scripts/sync-vercel-env.ts preview",
     "env:production": "tsx scripts/sync-vercel-env.ts production",
-    "deploy": "bunx vercel deploy",
-    "deploy:prod": "bunx vercel deploy --prod",
-    "deploy:check": "bunx vercel deploy --dry",
-    "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/",
-    "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/",
-    "auth:generate": "cd apps/web && bun run auth:generate",
-    "check": "ultracite check",
-    "fix": "ultracite fix"
+    "fix": "ultracite fix",
+    "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/"
+  },
+  "overrides": {
+    "@next/env": "npm:@varlock/nextjs-integration@1.2.2"
   },
   "dependencies": {
     "zod": "catalog:"
@@ -63,9 +64,6 @@
     "typescript": "catalog:",
     "ultracite": "7.11.0",
     "varlock": "catalog:"
-  },
-  "overrides": {
-    "@next/env": "npm:@varlock/nextjs-integration@1.2.2"
   },
   "packageManager": "bun@1.4.3"
 }

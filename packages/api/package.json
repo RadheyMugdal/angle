@@ -9,7 +9,6 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@angle-io/auth": "workspace:*",
     "@angle-io/db": "workspace:*",
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
